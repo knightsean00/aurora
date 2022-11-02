@@ -16,26 +16,26 @@ public class PlayerController : MonoBehaviour
     private float groundDeceleration;
     private float airAcceleration;
     private float airDeceleration;
+    private float gravityAcceleration = 35f;
 
     private float moveInput = 0f;
 
     private bool isJumping = false;
     private float maxGravityDelay = .25f; //This is how long gravity will be delayed
     private float gravityDelayTimer = 0f;
-    private float gravity = 1f;
 
-    private bool grounded = true;
+    private int layerMask = 1 << 3;
 
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
 
-        groundAcceleration = maxSpeed * 10;
+        groundAcceleration = maxSpeed * 9;
         groundDeceleration = groundAcceleration * 2f;
 
-        airAcceleration = maxSpeed * 4;
-        airDeceleration = maxSpeed * 2;
+        airAcceleration = maxSpeed * 4f;
+        airDeceleration = maxSpeed * 2f;
     }
 
     void Update()
@@ -47,15 +47,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonUp("Jump")) {
             isJumping = false;
         }
-        // Debug.Log(isJumping);
     }
 
     void FixedUpdate() 
     {
         Vector2 tempVelocity = player.velocity;
 
-        if (tempVelocity.y == 0f) {
-            Debug.Log(isJumping);
+        if (isGrounded()) {
             if (moveInput != 0) {
                 tempVelocity.x = Mathf.MoveTowards(tempVelocity.x, maxSpeed * moveInput, groundAcceleration * Time.fixedDeltaTime);
             } else {
@@ -63,11 +61,8 @@ public class PlayerController : MonoBehaviour
             }
 
             if (isJumping) {
-                grounded = false;
                 tempVelocity.y = jumpVelocity;
-                player.gravityScale = .5f;
                 gravityDelayTimer = 0f;
-                // player.gravityScale = Mathf.MoveTowards(player.gravityScale, gravity, )
             }
         } else {
             if (moveInput != 0) {
@@ -78,10 +73,10 @@ public class PlayerController : MonoBehaviour
 
             if (isJumping && gravityDelayTimer < maxGravityDelay) {
                 gravityDelayTimer += Time.fixedDeltaTime;
-                player.gravityScale = Mathf.MoveTowards(player.gravityScale, gravity, .01f);
+                // tempVelocity.y = Mathf.MoveTowards(tempVelocity.y, -50, 1f * Time.fixedDeltaTime);
             } else {
                 gravityDelayTimer = maxGravityDelay; //If they let go, then gravity will start again.
-                player.gravityScale = Mathf.MoveTowards(player.gravityScale, gravity, .05f);
+                tempVelocity.y = Mathf.MoveTowards(tempVelocity.y, -50, gravityAcceleration * Time.fixedDeltaTime);
             }
         }
         
@@ -90,6 +85,11 @@ public class PlayerController : MonoBehaviour
     }
 
     bool isGrounded() {
-        return true;
+        RaycastHit2D raycastResult = Physics2D.Raycast(player.transform.position, Vector2.down, 5, layerMask);
+
+        if (raycastResult.collider && raycastResult.distance <= .52) {
+            return true;
+        }
+        return false;
     }
 }
