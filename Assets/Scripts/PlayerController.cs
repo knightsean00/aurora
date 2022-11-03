@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Raycast raycaster;
 
     private Rigidbody2D player;
+    private SpriteRenderer renderer;
 
     // private Vector2 velocity
     private float maxSpeed = 10f;
@@ -25,15 +26,13 @@ public class PlayerController : MonoBehaviour
     private float maxGravityDelay = .3f; //This is how maximum length of time gravity will be delayed when jumping
     private float gravityDelayTimer = 0f;
 
-    private float coyoteTimeDelay = 1f;
-    private float coyoteTimer = 0f;
-
     private int layerMask = 1 << 3;
 
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
+        renderer = GetComponent<SpriteRenderer>();
 
         groundAcceleration = maxSpeed * 9;
         groundDeceleration = groundAcceleration * 2f;
@@ -59,7 +58,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate() 
     {
         Vector2 tempVelocity = player.velocity;
-        // Debug.Log(coyoteTimer);
 
         if (isGrounded()) {
             if (moveInput != 0) {
@@ -88,21 +86,26 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (!isGrounded() && coyoteTimer < coyoteTimeDelay) {
-            coyoteTimer += Time.fixedDeltaTime;
-        }
-        
-        // Debug.Log(tempVelocity);
         player.velocity = tempVelocity;
     }
 
-    bool isGrounded() {
-        RaycastHit2D raycastResult = Physics2D.Raycast(player.transform.position, Vector2.down, 5, layerMask);
+    public bool isGrounded() {
+        RaycastHit2D leftRaycast = Physics2D.Raycast(
+            new Vector2(player.transform.position.x - (renderer.size.x / 2), player.transform.position.y - (renderer.size.y / 2)),
+            Vector2.down,
+            5,
+            layerMask);
+        RaycastHit2D rightRaycast = Physics2D.Raycast(
+            new Vector2(player.transform.position.x + (renderer.size.x / 2), player.transform.position.y - (renderer.size.y / 2)),
+            Vector2.down,
+            5,
+            layerMask);
 
-        if (raycastResult.collider && raycastResult.distance <= .52) {
-            coyoteTimer = 0f;
+        Debug.Log(leftRaycast.distance);
+        Debug.Log(rightRaycast.distance);
+        if ((leftRaycast.collider && leftRaycast.distance <= .02) || (rightRaycast.collider && rightRaycast.distance <= .02)) {
             return true;
-        }
+        } 
         return false;
     }
 }
