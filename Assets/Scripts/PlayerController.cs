@@ -21,8 +21,11 @@ public class PlayerController : MonoBehaviour
     private float moveInput = 0f;
 
     private bool isJumping = false;
-    private float maxGravityDelay = .25f; //This is how long gravity will be delayed
+    private float maxGravityDelay = .3f; //This is how maximum length of time gravity will be delayed when jumping
     private float gravityDelayTimer = 0f;
+
+    private float coyoteTimeDelay = 1f;
+    private float coyoteTimer = 0f;
 
     private int layerMask = 1 << 3;
 
@@ -52,6 +55,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate() 
     {
         Vector2 tempVelocity = player.velocity;
+        // Debug.Log(coyoteTimer);
 
         if (isGrounded()) {
             if (moveInput != 0) {
@@ -79,6 +83,10 @@ public class PlayerController : MonoBehaviour
                 tempVelocity.y = Mathf.MoveTowards(tempVelocity.y, -50, gravityAcceleration * Time.fixedDeltaTime);
             }
         }
+
+        if (!isGrounded() && coyoteTimer < coyoteTimeDelay) {
+            coyoteTimer += Time.fixedDeltaTime;
+        }
         
         // Debug.Log(tempVelocity);
         player.velocity = tempVelocity;
@@ -88,6 +96,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D raycastResult = Physics2D.Raycast(player.transform.position, Vector2.down, 5, layerMask);
 
         if (raycastResult.collider && raycastResult.distance <= .52) {
+            coyoteTimer = 0f;
             return true;
         }
         return false;
