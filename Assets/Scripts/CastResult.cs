@@ -4,15 +4,16 @@ using UnityEngine;
 
 public interface CastResult
 {
-    public enum Type { Safe, Spike, Treasure }
+    public enum Type { Safe, Danger, Treasure }
     public class Miss : CastResult {} 
-    public record Hit(int colliderID, Vector2 point) : CastResult;
-    public record Collection(int colliderID, List<Vector2> points);
+    public record Info(int colliderID, Type type);
+    public record Hit(Info info, Vector2 point) : CastResult;
+    public record Collection(Info info, List<Vector2> points);
     public bool IsNear(CastResult other, float thresh) {
-        return this is Hit th && other is Hit oh && th.colliderID == oh.colliderID && Vector2.Distance(th.point, oh.point) < thresh;
+        return this is Hit th && other is Hit oh && th.info == oh.info && Vector2.Distance(th.point, oh.point) < thresh;
     }
-    public int? Id() {
-        return this is Hit th ? th.colliderID : null;
+    public Info GetInfo() {
+        return this is Hit th ? th.info : null;
     }
 }
 

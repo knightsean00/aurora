@@ -30,6 +30,7 @@ public class Raycast : MonoBehaviour
             }
         };
         */
+        //GetComponent<MeshRenderer>().sortingLayerName = "Raycast";
     }
 
     void Update() {
@@ -47,6 +48,10 @@ public class Raycast : MonoBehaviour
     public void RunRaycast() {
         RunRaycast(0, Mathf.PI * 2, true);
     }
+    public CastResult.Type GetType(GameObject obj) {
+        // TODO stub
+        return CastResult.Type.Safe;
+    }
     void RunRaycast(float start, float end, bool doWrap) {
             lastFlash = Time.time + FadeDelay;
             Vector2 pos = playerPos.position;
@@ -58,7 +63,8 @@ public class Raycast : MonoBehaviour
                 var dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                 var hit = Physics2D.Raycast(pos, dir, MaxDistance);
                 if (hit.collider != null) {
-                    castResults[i] = new CastResult.Hit(hit.collider.gameObject.GetHashCode(), hit.point);
+                    var obj = hit.collider.gameObject;
+                    castResults[i] = new CastResult.Hit(new CastResult.Info(obj.GetHashCode(), GetType(obj)), hit.point);
                     numResults++;
                 } else {
                     castResults[i] = new CastResult.Miss();
@@ -68,11 +74,11 @@ public class Raycast : MonoBehaviour
             CastResult lastVal = null;
             float thresh = ConnectThreshold * Mathf.PI * 2 / Span;
             foreach (var cast in castResults) {
-                var id = cast.Id();
+                var info = cast.GetInfo();
                 if (cast is CastResult.Hit hit) {
                     var threshMul = (hit.point - pos).magnitude;
                     if (lineGroups.Count == 0 || !(lastVal is CastResult res) || !res.IsNear(cast, thresh * threshMul)) {
-                        lineGroups.Add(new CastResult.Collection(hit.colliderID, new List<Vector2>()));
+                        lineGroups.Add(new CastResult.Collection(hit.info, new List<Vector2>()));
                     }
                     lineGroups.Last().points.Add(hit.point);
                 }
@@ -83,7 +89,7 @@ public class Raycast : MonoBehaviour
                 if (lineGroups.Count > 1 && castResults[0].IsNear(castResults.Last(), thresh * threshMul)) {
                     var last = lineGroups.Last().points;
                     lineGroups.RemoveAt(lineGroups.Count - 1);
-                    lineGroups[0] = new CastResult.Collection(lineGroups[0].colliderID, new List<Vector2>(last.Concat(lineGroups[0].points)));
+                    lineGroups[0] = new CastResult.Collection(lineGroups[0].info, new List<Vector2>(last.Concat(lineGroups[0].points)));
                 }
             }
             Debug.Log("[Ray] " + numResults + " vertices, " + lineGroups.Count + " sectors");
@@ -92,6 +98,7 @@ public class Raycast : MonoBehaviour
             var vertices = new Vector3[20 * numResults];
             // u: raw light, v: angle magnitude
             var vtxData = new Vector2[20 * numResults];
+            var colorData = new Vector2[20 * numResults];
             var triangles = new int[60 * (numResults - lineGroups.Count)];
             var ix = new MeshIx(0, 0);
             foreach (var coll in lineGroups) {
@@ -104,7 +111,8 @@ public class Raycast : MonoBehaviour
                     //if ((i == 0 || i == points.Count - 1) && points.Count >= 3) illumination /= 2;
                     vtxDataIn[i] = new Vector2(illumination, BasePower / offset.sqrMagnitude);
                 }
-                ix = buildLine(ix, points, vertices, vtxDataIn, vtxData, triangles);
+                var newIx = buildLine(ix, points, vertices, vtxDataIn, vtxData, triangles);
+                ix = newIx;
             }
             var mesh = new Mesh();
             mesh.SetVertices(vertices, 0, ix.verts);
