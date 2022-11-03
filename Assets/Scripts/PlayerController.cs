@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public bool canMove;
+    public Raycast raycaster;
 
     private Rigidbody2D player;
 
@@ -49,6 +50,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonUp("Jump")) {
             isJumping = false;
+        }
+        if (Input.GetMouseButtonDown(0)) {
+            raycaster.RunRaycast();
         }
     }
 
