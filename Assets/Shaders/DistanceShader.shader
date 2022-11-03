@@ -12,9 +12,10 @@ Shader "Shaders/DistanceShader"
     }
     SubShader
     {
+        Tags { "Queue" = "Overlay" }
         // No culling or depth
         Cull Off
-        //ZWrite Off
+        ZWrite Off
         ZTest Always
         Blend SrcAlpha OneMinusSrcAlpha
 
