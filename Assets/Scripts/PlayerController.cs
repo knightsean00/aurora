@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool canMove;
     public Raycast raycaster;
 
     private Rigidbody2D player;
-    private SpriteRenderer renderer;
+    // private SpriteRenderer renderer;
+
+    private Collider2D groundCollider;
 
     // private Vector2 velocity
-    private float maxSpeed = 10f;
-    private float jumpVelocity = 10f;
+    private float maxSpeed = 12.5f;
+    private float jumpVelocity = 15f;
 
     private float groundAcceleration;
     private float groundDeceleration;
     private float airAcceleration;
     private float airDeceleration;
-    private float gravityAcceleration = 35f;
+    private float gravityAcceleration = 62.5f;
+    private bool canMove = true;
 
     private float moveInput = 0f;
 
@@ -26,13 +28,15 @@ public class PlayerController : MonoBehaviour
     private float maxGravityDelay = .3f; //This is how maximum length of time gravity will be delayed when jumping
     private float gravityDelayTimer = 0f;
 
-    private int layerMask = 1 << 3;
+    private int groundMask = 1 << 3;
+
 
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
-        renderer = GetComponent<SpriteRenderer>();
+        // renderer = GetComponent<SpriteRenderer>();
+        groundCollider = this.transform.Find("GroundCollider").GetComponent<Collider2D>();
 
         groundAcceleration = maxSpeed * 9;
         groundDeceleration = groundAcceleration * 2f;
@@ -57,55 +61,56 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() 
     {
-        Vector2 tempVelocity = player.velocity;
+        if (canMove) {
+            Vector2 tempVelocity = player.velocity;
 
-        if (isGrounded()) {
-            if (moveInput != 0) {
-                tempVelocity.x = Mathf.MoveTowards(tempVelocity.x, maxSpeed * moveInput, groundAcceleration * Time.fixedDeltaTime);
+            if (isGrounded()) {
+                // if (groundCollider.)
+
+                if (moveInput != 0) {
+                    tempVelocity.x = Mathf.MoveTowards(tempVelocity.x, maxSpeed * moveInput, groundAcceleration * Time.fixedDeltaTime);
+                } else {
+                    tempVelocity.x = Mathf.MoveTowards(tempVelocity.x , 0, groundDeceleration * Time.fixedDeltaTime);
+                }
+
+                if (isJumping) {
+                    tempVelocity.y = jumpVelocity;
+                    gravityDelayTimer = 0f;
+                }
             } else {
-                tempVelocity.x = Mathf.MoveTowards(tempVelocity.x , 0, groundDeceleration * Time.fixedDeltaTime);
+                if (moveInput != 0) {
+                    tempVelocity.x = Mathf.MoveTowards(tempVelocity.x, maxSpeed * moveInput, airAcceleration * Time.fixedDeltaTime);
+                } else {
+                    tempVelocity.x = Mathf.MoveTowards(tempVelocity.x , 0, airDeceleration * Time.fixedDeltaTime);
+                }
+
+                if (isJumping && gravityDelayTimer < maxGravityDelay && player.velocity.y > 0) {
+                    gravityDelayTimer += Time.fixedDeltaTime;
+                    // tempVelocity.y = Mathf.MoveTowards(tempVelocity.y, -50, 1f * Time.fixedDeltaTime);
+                } else {
+                    gravityDelayTimer = maxGravityDelay; //If they let go, then gravity will start again.
+                    tempVelocity.y = Mathf.MoveTowards(tempVelocity.y, -50, gravityAcceleration * Time.fixedDeltaTime);
+                }
             }
 
-            if (isJumping) {
-                tempVelocity.y = jumpVelocity;
-                gravityDelayTimer = 0f;
-            }
+            player.velocity = tempVelocity;
         } else {
-            if (moveInput != 0) {
-                tempVelocity.x = Mathf.MoveTowards(tempVelocity.x, maxSpeed * moveInput, airAcceleration * Time.fixedDeltaTime);
-            } else {
-                tempVelocity.x = Mathf.MoveTowards(tempVelocity.x , 0, airDeceleration * Time.fixedDeltaTime);
-            }
-
-            if (isJumping && gravityDelayTimer < maxGravityDelay) {
-                gravityDelayTimer += Time.fixedDeltaTime;
-                // tempVelocity.y = Mathf.MoveTowards(tempVelocity.y, -50, 1f * Time.fixedDeltaTime);
-            } else {
-                gravityDelayTimer = maxGravityDelay; //If they let go, then gravity will start again.
-                tempVelocity.y = Mathf.MoveTowards(tempVelocity.y, -50, gravityAcceleration * Time.fixedDeltaTime);
-            }
+            player.velocity = Vector2.zero;
         }
-
-        player.velocity = tempVelocity;
     }
 
     public bool isGrounded() {
-        RaycastHit2D leftRaycast = Physics2D.Raycast(
-            new Vector2(player.transform.position.x - (renderer.size.x / 2), player.transform.position.y - (renderer.size.y / 2)),
-            Vector2.down,
-            5,
-            layerMask);
-        RaycastHit2D rightRaycast = Physics2D.Raycast(
-            new Vector2(player.transform.position.x + (renderer.size.x / 2), player.transform.position.y - (renderer.size.y / 2)),
-            Vector2.down,
-            5,
-            layerMask);
-
-        Debug.Log(leftRaycast.distance);
-        Debug.Log(rightRaycast.distance);
-        if ((leftRaycast.collider && leftRaycast.distance <= .02) || (rightRaycast.collider && rightRaycast.distance <= .02)) {
+        if (groundCollider.IsTouchingLayers(groundMask)) {
             return true;
-        } 
+        }
         return false;
+    }
+
+    public void StopMovement() {
+        canMove = false;
+    }
+
+    public void StartMovement() {
+        canMove = true;
     }
 }
