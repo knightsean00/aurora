@@ -87,19 +87,20 @@ public class Raycast : MonoBehaviour
             // initial buffers for vtx/tri
             var vertices = new Vector3[20 * numResults];
             // u: raw light, v: angle magnitude
-            var vtxData = new Vector2[20 * numResults];
+            var vtxData = new Vector3[20 * numResults];
             var colorData = new Vector2[20 * numResults];
             var triangles = new int[60 * (numResults - lineGroups.Count)];
             var ix = new MeshIx(0, 0);
             foreach (var coll in lineGroups) {
                 var points = coll.points;
-                var vtxDataIn = new Vector2[points.Count];
+                var vtxDataIn = new Vector3[points.Count];
+                var colorFlag = (float) (int) coll.info.type;
                 for (int i = 0; i < points.Count; i++) {
                     var tangent = (i == 0 ? points[i] : points[i - 1]) - (i == points.Count - 1 ? points[i] : points[i + 1]);
                     var offset = pos - points[i];
                     var illumination = Vector2.Dot(tangent.normalized, Vector2.Perpendicular(offset).normalized);
                     //if ((i == 0 || i == points.Count - 1) && points.Count >= 3) illumination /= 2;
-                    vtxDataIn[i] = new Vector2(illumination, BasePower / offset.sqrMagnitude);
+                    vtxDataIn[i] = new Vector3(illumination, BasePower / offset.sqrMagnitude, colorFlag);
                 }
                 var newIx = buildLine(ix, points, vertices, vtxDataIn, vtxData, triangles);
                 ix = newIx;

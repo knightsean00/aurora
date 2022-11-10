@@ -18,9 +18,9 @@ public class Detonate : MonoBehaviour
     void Start()
     {
         lastFlash = Time.time + FadeDelay;
+        Update();
     }
 
-    // Start is called before the first frame update
     void Update()
     {
         var mat = GetComponent<MeshRenderer>().material;

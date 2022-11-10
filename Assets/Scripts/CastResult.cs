@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface CastResult
 {
-    public enum Type { Safe, Danger, Treasure }
+    public enum Type { Safe = 0, Danger, Treasure }
     public class Miss : CastResult {} 
     public record Info(int colliderID, Type type);
     public record Hit(Info info, Vector2 point) : CastResult;
