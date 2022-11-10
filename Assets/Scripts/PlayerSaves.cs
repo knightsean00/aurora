@@ -13,7 +13,18 @@ public class PlayerSaves : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Death") {
+        SaveCollision(collision.gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision) {
+        SaveCollision(collision.gameObject);
+    }
+
+    void SaveCollision(GameObject collisionObject) {
+        if (collisionObject.tag == "Respawn") {
+            currentSave.position = collisionObject.transform.position;
+            currentSave.inventory = this.GetComponent<PlayerInventory>().GetInventory();
+        } else if (collisionObject.tag == "Death") {
             Die();
         }
     }

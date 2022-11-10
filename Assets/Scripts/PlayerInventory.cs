@@ -24,17 +24,21 @@ public class PlayerInventory : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Collectible") {
-            inventory.AddItem(collision.gameObject.name);
-            HideObject(collision.gameObject);
-            Debug.Log(inventory);
-        } else if (collision.gameObject.tag == "RuneDoor") {
+        if (collision.gameObject.tag == "RuneDoor") {
             Debug.Log(collision.gameObject.GetComponent<RuneDoor>().RequiredRunes);
             if (inventory.HasItems(collision.gameObject.GetComponent<RuneDoor>().RequiredRunes)) {
                 HideObject(collision.gameObject);
             } else {
                 Debug.Log(inventory);
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collider) {
+        if (collider.gameObject.tag == "Collectible") {
+            inventory.AddItem(collider.gameObject.name);
+            HideObject(collider.gameObject);
+            Debug.Log(inventory);
         }
     }
 
