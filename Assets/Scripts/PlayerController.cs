@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
     private float moveInput = 0f;
 
     private bool isJumping = false;
-    private float maxGravityDelay = .3f; //This is how maximum length of time gravity will be delayed when jumping
+    private bool jumpToggle = true;
+    private float maxGravityDelay = .2f; //This is how maximum length of time gravity will be delayed when jumping
     private float gravityDelayTimer = 0f;
 
     private int groundMask = 1 << 3;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonUp("Jump")) {
             isJumping = false;
+            jumpToggle = true;
         }
         if (Input.GetMouseButtonDown(0)) {
             raycaster.RunRaycast();
@@ -65,15 +67,14 @@ public class PlayerController : MonoBehaviour
             Vector2 tempVelocity = player.velocity;
 
             if (isGrounded()) {
-                // if (groundCollider.)
-
                 if (moveInput != 0) {
                     tempVelocity.x = Mathf.MoveTowards(tempVelocity.x, maxSpeed * moveInput, groundAcceleration * Time.fixedDeltaTime);
                 } else {
                     tempVelocity.x = Mathf.MoveTowards(tempVelocity.x , 0, groundDeceleration * Time.fixedDeltaTime);
                 }
 
-                if (isJumping) {
+                if (jumpToggle && isJumping) {
+                    jumpToggle = false;
                     tempVelocity.y = jumpVelocity;
                     gravityDelayTimer = 0f;
                 }

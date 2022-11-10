@@ -6,6 +6,8 @@ TagManager:
   tags:
   - MovingPlatform
   - Death
+  - Collectible
+  - RuneDoor
   layers:
   - Default
   - TransparentFX

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using System.Reflection;
 using System;
-#endif
+
  
 //Expose SortingLayer  SortingOrder on MeshRenderer
 //With nice drop down and revert to prefab functionality.
@@ -96,4 +96,6 @@ public class MeshRendererSortingLayersEditor : Editor
     }
  
 }
+
+#endif
  

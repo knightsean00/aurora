@@ -5,11 +5,11 @@ using UnityEngine;
 public class CameraTracking : MonoBehaviour
 {
     private Transform TrackedTransform;
-    public bool canMove = true;
 
-    private float smoothTime = 0f;
+    private bool movingToPosition = false;
+    private Vector3 targetPosition;
+    private float maxDistance = 0f;
     private float movementTime = 0f;
-    private Vector3 velocity = Vector3.zero;
 
     void Awake()
     {
@@ -19,25 +19,21 @@ public class CameraTracking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canMove) {
-            if (TrackedTransform) {
-                if (smoothTime > 0f) {
-                    // Debug.Log()
-                    this.transform.position = Vector3.SmoothDamp(
-                        this.transform.position,
-                        TrackedTransform.position + new Vector3(0, 1, -10),
-                        ref velocity, 
-                        smoothTime
-                    );
-                    movementTime += Time.deltaTime;
+        if (movingToPosition) {
+            this.transform.position = Vector3.MoveTowards(
+                this.transform.position,
+                targetPosition + new Vector3(0, 1, -10),
+                maxDistance * Time.deltaTime
+            );
+            movementTime -= Time.deltaTime;
 
-                    if (movementTime >= smoothTime) {
-                        smoothTime = 0f;
-                    }
-                } else {
-                    this.transform.position = TrackedTransform.position + new Vector3(0, 1, -10);
-                }                
+            if (movementTime <= 0) {
+                movingToPosition = false;
+                targetPosition = Vector3.zero;
+                movementTime = 0f;
             }
+        } else if (TrackedTransform) {
+            this.transform.position = TrackedTransform.position + new Vector3(0, 1, -10);       
         }
     }
 
@@ -46,28 +42,17 @@ public class CameraTracking : MonoBehaviour
         TrackedTransform = GameObject.Find(ObjectName).transform;
     }
 
-    public void StopTracking()
+    public void StopTracking() 
     {
-        canMove = false;
+        TrackedTransform = null;
     }
 
-    // public void StartTracking()
-    // {
-    //     canMove = true;
-    //     MoveToTracked(1f);
-    // }
 
-    public void StartTracking(float time)
+    public void MoveToPosition(Vector3 position, float time)
     {
-        canMove = true;
-        MoveToTracked(time);
-    }
-
-    public void MoveToTracked(float time)
-    {
-        Debug.Log("MOving to position tracked with " + time);
-        if (TrackedTransform != null && this.transform.position != TrackedTransform.position) {
-            smoothTime = time;
-        }
+        maxDistance = Vector3.Distance(position, this.transform.position) / time;
+        movingToPosition = true;
+        targetPosition = position;
+        movementTime = time;
     }
 }

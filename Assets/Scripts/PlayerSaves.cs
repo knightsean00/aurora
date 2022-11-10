@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDeath : MonoBehaviour
+public class PlayerSaves : MonoBehaviour
 {
     private Save currentSave;
+    private float resetTime = .75f;
 
-    void Start()
+    void Awake()
     {
-        currentSave = new Save(this.transform.position, new Inventory());
+        currentSave = new Save(this.transform.position, this.GetComponent<PlayerInventory>().GetInventory());
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -18,21 +19,26 @@ public class PlayerDeath : MonoBehaviour
     }
 
     public void Die() {
-        GameObject.Find("Main Camera").SendMessage("StopTracking");
         this.gameObject.GetComponent<PlayerController>().StopMovement();
+        this.GetComponent<SpriteRenderer>().enabled = false;
+        this.GetComponent<PlayerInventory>().ResetInventory(currentSave.inventory);
+        Debug.Log("Resetting Inventory to " + currentSave.inventory);
         this.transform.position = currentSave.position;
-        GameObject.Find("Main Camera").SendMessage("StartTracking", 3f);
-        Invoke("Respawn", 5f);
+        
+
+        GameObject.Find("Main Camera").GetComponent<CameraTracking>().MoveToPosition(currentSave.position, resetTime);
+        Invoke("Respawn", resetTime + .1f);
     }
 
     public void Respawn() {
         this.gameObject.GetComponent<PlayerController>().StartMovement();
+        this.GetComponent<SpriteRenderer>().enabled = true;
     }
 }
 
 public class Save {
     public Vector3 position;
-    Inventory inventory;
+    public Inventory inventory;
 
     public Save(Vector3 position, Inventory inventory) {
         this.position = position;
