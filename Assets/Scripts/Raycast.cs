@@ -14,11 +14,8 @@ public class Raycast : MonoBehaviour
     public float CapTheta = 18;
     public float LineWidth = 0.08f;
 
-    public float FadeDelay = 2f;
-    public float FadeSpeed = 10f;
     public Transform playerPos;
-
-    private float lastFlash = 0;
+    public GameObject RenderPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -31,12 +28,6 @@ public class Raycast : MonoBehaviour
         };
         */
         //GetComponent<MeshRenderer>().sortingLayerName = "Raycast";
-    }
-
-    void Update() {
-        var mat = GetComponent<MeshRenderer>().material;
-        mat.SetVector("_Position", playerPos.position);
-        mat.SetFloat("_Opacity", 1 / (1 + Mathf.Exp(FadeSpeed * (Time.time - lastFlash))));
     }
 
 
@@ -53,7 +44,6 @@ public class Raycast : MonoBehaviour
         return CastResult.Type.Safe;
     }
     void RunRaycast(float start, float end, bool doWrap) {
-            lastFlash = Time.time + FadeDelay;
             Vector2 pos = playerPos.position;
             var chunks = (int) Mathf.Ceil((end - start) / (Mathf.PI * 2) * Span);
             var castResults = new CastResult[chunks];
@@ -118,7 +108,9 @@ public class Raycast : MonoBehaviour
             mesh.SetVertices(vertices, 0, ix.verts);
             mesh.SetTriangles(triangles, 0, ix.tris, 0, true, 0);
             mesh.SetUVs(0, vtxData, 0, ix.verts);
-            GetComponent<MeshFilter>().mesh = mesh;
+            var meshObj = Instantiate(RenderPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            meshObj.GetComponent<MeshFilter>().mesh = mesh;
+            meshObj.GetComponent<Detonate>().playerPos = playerPos;
     }
     MeshIx buildLine<T>(MeshIx ix, List<Vector2> points, Vector3[] vertices, T[] vtxDataIn, T[] vtxData, int[] triangles) {
         int vix = ix.verts, tix = ix.tris;
