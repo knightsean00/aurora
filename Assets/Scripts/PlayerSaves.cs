@@ -9,22 +9,38 @@ public class PlayerSaves : MonoBehaviour
 
     void Awake()
     {
-        currentSave = new Save(this.transform.position, this.GetComponent<PlayerInventory>().GetInventory());
+        currentSave = new Save(
+            this.transform.position, 
+            this.GetComponent<PlayerInventory>().GetInventory()
+        );
+
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            if (enemy != null) {
+                enemy.GetComponent<EnemyBehavior>().CreateSave();
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        SaveCollision(collision.gameObject);
+        HandleCollision(collision.gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        SaveCollision(collision.gameObject);
+        HandleCollision(collision.gameObject);
     }
 
-    void SaveCollision(GameObject collisionObject) {
+    void HandleCollision(GameObject collisionObject) {
         if (collisionObject.tag == "Respawn") {
             currentSave.position = collisionObject.transform.position;
             currentSave.inventory = this.GetComponent<PlayerInventory>().GetInventory();
+            foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+                enemy.GetComponent<EnemyBehavior>().CreateSave();
+            }
         } else if (collisionObject.tag == "Death") {
+            Die();
+        } else if (collisionObject.tag == "HiddenDeath") {
+            Die();
+        } else if (collisionObject.tag == "Enemy") {
             Die();
         }
     }
@@ -33,10 +49,12 @@ public class PlayerSaves : MonoBehaviour
         this.gameObject.GetComponent<PlayerController>().StopMovement();
         this.GetComponent<SpriteRenderer>().enabled = false;
         this.GetComponent<PlayerInventory>().ResetInventory(currentSave.inventory);
-        Debug.Log("Resetting Inventory to " + currentSave.inventory);
         this.transform.position = currentSave.position;
-        
 
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            enemy.GetComponent<EnemyBehavior>().LoadSave();
+        }
+        
         GameObject.Find("Main Camera").GetComponent<CameraTracking>().MoveToPosition(currentSave.position, resetTime);
         Invoke("Respawn", resetTime + .1f);
     }

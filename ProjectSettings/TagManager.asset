@@ -8,6 +8,8 @@ TagManager:
   - Death
   - Collectible
   - RuneDoor
+  - Enemy
+  - HiddenDeath
   layers:
   - Default
   - TransparentFX

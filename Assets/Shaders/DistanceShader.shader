@@ -62,12 +62,12 @@ Shader "Shaders/DistanceShader"
             {
                 fixed4x4 _NearColors;
                 _NearColors[0] = fixed4(0, 0.9696946, 1, 1);
-                _NearColors[1] = fixed4(1, 0.7, 0, 1);
+                _NearColors[1] = fixed4(1, 0, 0, 1);
                 _NearColors[2] = fixed4(1, 0, 1, 1);
                 _NearColors[3] = fixed4(1, 0, 1, 1);
                 fixed4x4 _FarColors;
                 _FarColors[0] = fixed4(0.46720982, 1, 0, 1);
-                _FarColors[1] = fixed4(1, 0, 0, 1);
+                _FarColors[1] = fixed4(1, .7, 0, 1);
                 _FarColors[2] = fixed4(1, 0, 1, 1);
                 _FarColors[3] = fixed4(1, 0, 1, 1);
                 int ix = int(i.uv.z);

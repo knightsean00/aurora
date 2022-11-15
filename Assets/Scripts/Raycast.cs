@@ -42,7 +42,12 @@ public class Raycast : MonoBehaviour
         RunRaycast(0, Mathf.PI * 2, true);
     }
     public CastResult.Type GetType(GameObject obj) {
-        // TODO stub
+        if (obj.tag == "Death") {
+            return CastResult.Type.Danger;
+        } else if (obj.tag == "Enemy") {
+            obj.GetComponent<EnemyBehavior>().StartChasing(playerPos.position);
+            return CastResult.Type.Danger;
+        }
         return CastResult.Type.Safe;
     }
     void RunRaycast(float start, float end, bool doWrap) {
