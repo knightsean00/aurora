@@ -9,6 +9,7 @@ Shader "Shaders/DistanceShader"
         _MaxIllum ("Max Illumination", Float) = 10
         _Position ("Position", Vector) = (0,0,0,0)
         _Opacity ("Global Opacity", Float) = 1
+        _ScanTime ("Global Opacity", Float) = 0
     }
     SubShader
     {
@@ -55,6 +56,7 @@ Shader "Shaders/DistanceShader"
 
             float _Opacity;
             float _MaxIllum;
+            float _ScanTime;
 
             fixed4 frag (v2f i) : SV_Target
             {
@@ -70,9 +72,13 @@ Shader "Shaders/DistanceShader"
                 _FarColors[3] = fixed4(1, 0, 1, 1);
                 int ix = int(i.uv.z);
                 fixed4 col = lerp(_NearColors[ix], _FarColors[ix], i.uv.w);
-                float alpha = min(col.a * i.uv.y * i.uv.x * _Opacity, _MaxIllum);
-                col.rgb *= alpha;
-                col.a = min(1, alpha);
+                if (_ScanTime + i.uv.y > _Time.y) {
+                    col.a = 0;
+                } else {
+                    float alpha = min(col.a * i.uv.x * _Opacity, _MaxIllum);
+                    col.a = min(1, alpha);
+                }
+                col.rgb *= col.a;
                 return col;
             }
             ENDCG

@@ -10,9 +10,11 @@ public class Raycast : MonoBehaviour
     public float MaxDistance = 100;
     public int Span = 360;
     public float ConnectThreshold = 50;
+    public float PropSpeed = 60;
     public float BasePower = 500;
     public float CapTheta = 18;
     public float LineWidth = 0.08f;
+    public float Timeout = 0;
 
     public Transform playerPos;
     public GameObject RenderPrefab;
@@ -44,6 +46,8 @@ public class Raycast : MonoBehaviour
         return CastResult.Type.Safe;
     }
     void RunRaycast(float start, float end, bool doWrap) {
+            if (Time.time < Timeout) return;
+            Timeout = Time.time + MaxDistance / PropSpeed;
             Vector2 pos = playerPos.position;
             var chunks = (int) Mathf.Ceil((end - start) / (Mathf.PI * 2) * Span);
             var castResults = new CastResult[chunks];
@@ -100,7 +104,7 @@ public class Raycast : MonoBehaviour
                     var offset = pos - points[i];
                     var illumination = Vector2.Dot(tangent.normalized, Vector2.Perpendicular(offset).normalized);
                     //if ((i == 0 || i == points.Count - 1) && points.Count >= 3) illumination /= 2;
-                    vtxDataIn[i] = new Vector3(illumination, BasePower / offset.sqrMagnitude, colorFlag);
+                    vtxDataIn[i] = new Vector3(illumination * BasePower / offset.sqrMagnitude, offset.magnitude / PropSpeed, colorFlag);
                 }
                 var newIx = buildLine(ix, points, vertices, vtxDataIn, vtxData, triangles);
                 ix = newIx;
