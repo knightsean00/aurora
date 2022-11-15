@@ -116,6 +116,7 @@ public class Raycast : MonoBehaviour
             var meshObj = Instantiate(RenderPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             meshObj.GetComponent<MeshFilter>().mesh = mesh;
             meshObj.GetComponent<Detonate>().playerPos = playerPos;
+            meshObj.GetComponent<Detonate>().MasterCopy = false;
     }
     MeshIx buildLine<T>(MeshIx ix, List<Vector2> points, Vector3[] vertices, T[] vtxDataIn, T[] vtxData, int[] triangles) {
         int vix = ix.verts, tix = ix.tris;
