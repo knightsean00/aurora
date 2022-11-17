@@ -96,12 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702579fc669f19341939cb1ecf72e883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxDistance: 100
+  MaxDistance: 15
   Span: 360
   ConnectThreshold: 50
+  PropSpeed: 60
   BasePower: 500
   CapTheta: 18
   LineWidth: 0.08
-  FadeDelay: 1
-  FadeSpeed: 5
+  Timeout: 0
   playerPos: {fileID: 0}
+  RenderPrefab: {fileID: 0}

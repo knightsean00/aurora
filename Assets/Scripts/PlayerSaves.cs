@@ -15,10 +15,7 @@ public class PlayerSaves : MonoBehaviour
         );
 
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
-            Debug.Log(enemy.name);
-            if (enemy != null) {
-                enemy.GetComponent<EnemyBehavior>().CreateSave();
-            }
+            enemy.SendMessage("CreateSave");
         }
     }
 
@@ -34,8 +31,9 @@ public class PlayerSaves : MonoBehaviour
         if (collisionObject.tag == "Respawn") {
             currentSave.position = collisionObject.transform.position;
             currentSave.inventory = this.GetComponent<PlayerInventory>().GetInventory();
+            
             foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
-                enemy.GetComponent<EnemyBehavior>().CreateSave();
+                enemy.SendMessage("CreateSave");
             }
         } else if (collisionObject.tag == "Death") {
             Die();
@@ -53,7 +51,7 @@ public class PlayerSaves : MonoBehaviour
         this.transform.position = currentSave.position;
 
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
-            enemy.GetComponent<EnemyBehavior>().LoadSave();
+            enemy.SendMessage("LoadSave");
         }
         
         GameObject.Find("Main Camera").GetComponent<CameraTracking>().MoveToPosition(currentSave.position, resetTime);

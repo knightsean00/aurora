@@ -78,11 +78,18 @@ public class EnemyBehavior : MonoBehaviour
         this.GetComponent<SpriteRenderer>().enabled = false;
         this.GetComponent<Collider2D>().enabled = false;
         enemy.velocity = Vector2.zero;
+        enemy.gravityScale = 0f;
         isChasing = false;
     }
 
     public void LoadSave() {
+        enemy.velocity = Vector2.zero;
+        this.speed = save.speed;
         this.isChasing = save.isChasing;
+        this.transform.position = save.position;
+        this.target = save.target;
+        enemy.gravityScale = save.gravityScale;
+        this.enemyBehavior = save.enemyBehavior;
         this.isEnabled = save.isEnabled;
         if (save.isEnabled) {
             this.GetComponent<SpriteRenderer>().enabled = true;
@@ -91,15 +98,9 @@ public class EnemyBehavior : MonoBehaviour
             this.GetComponent<SpriteRenderer>().enabled = false;
             this.GetComponent<Collider2D>().enabled = false;
         }
-        this.transform.position = save.position;
-        this.target = save.target;
-        enemy.gravityScale = save.gravityScale;
-        this.speed = save.speed;
-        this.enemyBehavior = save.enemyBehavior;
     }
 
     public void CreateSave() {
-        Debug.Log("Creating Save");
         save = new EnemySave(
             isChasing,
             isEnabled,
@@ -129,10 +130,8 @@ public class EnemyBehavior : MonoBehaviour
 
         if (enemyBehavior == Behavior.MoveXAndContinue) {
             if (this.transform.position.x < target.x) {
-                Debug.Log("MOve right");
                 speed = Mathf.Abs(speed);
             } else if (this.transform.position.x > target.x) {
-                Debug.Log("MOve left");
                 speed = -Mathf.Abs(speed);
             }
         }
