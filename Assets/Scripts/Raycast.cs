@@ -10,9 +10,11 @@ public class Raycast : MonoBehaviour
     public float MaxDistance = 100;
     public int Span = 360;
     public float ConnectThreshold = 50;
+    public float PropSpeed = 60;
     public float BasePower = 500;
     public float CapTheta = 18;
     public float LineWidth = 0.08f;
+    public float Timeout = 0;
 
     public Transform playerPos;
     public GameObject RenderPrefab;
@@ -40,10 +42,17 @@ public class Raycast : MonoBehaviour
         RunRaycast(0, Mathf.PI * 2, true);
     }
     public CastResult.Type GetType(GameObject obj) {
-        // TODO stub
+        if (obj.tag == "Death") {
+            return CastResult.Type.Danger;
+        } else if (obj.tag == "Enemy") {
+            obj.GetComponent<EnemyBehavior>().StartChasing(playerPos.position);
+            return CastResult.Type.Danger;
+        }
         return CastResult.Type.Safe;
     }
     void RunRaycast(float start, float end, bool doWrap) {
+            if (Time.time < Timeout) return;
+            Timeout = Time.time + MaxDistance / PropSpeed;
             Vector2 pos = playerPos.position;
             var chunks = (int) Mathf.Ceil((end - start) / (Mathf.PI * 2) * Span);
             var castResults = new CastResult[chunks];
@@ -87,19 +96,20 @@ public class Raycast : MonoBehaviour
             // initial buffers for vtx/tri
             var vertices = new Vector3[20 * numResults];
             // u: raw light, v: angle magnitude
-            var vtxData = new Vector2[20 * numResults];
+            var vtxData = new Vector3[20 * numResults];
             var colorData = new Vector2[20 * numResults];
             var triangles = new int[60 * (numResults - lineGroups.Count)];
             var ix = new MeshIx(0, 0);
             foreach (var coll in lineGroups) {
                 var points = coll.points;
-                var vtxDataIn = new Vector2[points.Count];
+                var vtxDataIn = new Vector3[points.Count];
+                var colorFlag = (float) (int) coll.info.type;
                 for (int i = 0; i < points.Count; i++) {
                     var tangent = (i == 0 ? points[i] : points[i - 1]) - (i == points.Count - 1 ? points[i] : points[i + 1]);
                     var offset = pos - points[i];
                     var illumination = Vector2.Dot(tangent.normalized, Vector2.Perpendicular(offset).normalized);
                     //if ((i == 0 || i == points.Count - 1) && points.Count >= 3) illumination /= 2;
-                    vtxDataIn[i] = new Vector2(illumination, BasePower / offset.sqrMagnitude);
+                    vtxDataIn[i] = new Vector3(illumination * BasePower / offset.sqrMagnitude, offset.magnitude / PropSpeed, colorFlag);
                 }
                 var newIx = buildLine(ix, points, vertices, vtxDataIn, vtxData, triangles);
                 ix = newIx;
@@ -111,6 +121,7 @@ public class Raycast : MonoBehaviour
             var meshObj = Instantiate(RenderPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             meshObj.GetComponent<MeshFilter>().mesh = mesh;
             meshObj.GetComponent<Detonate>().playerPos = playerPos;
+            meshObj.GetComponent<Detonate>().MasterCopy = false;
     }
     MeshIx buildLine<T>(MeshIx ix, List<Vector2> points, Vector3[] vertices, T[] vtxDataIn, T[] vtxData, int[] triangles) {
         int vix = ix.verts, tix = ix.tris;

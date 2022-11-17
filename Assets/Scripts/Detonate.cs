@@ -7,6 +7,7 @@ using UnityEngine;
 public class Detonate : MonoBehaviour
 {
     public float ExpireTime = 10f;
+    public bool MasterCopy = true;
 
     public float FadeDelay = 2f;
     public float FadeSpeed = 10f;
@@ -17,16 +18,18 @@ public class Detonate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var mat = GetComponent<MeshRenderer>().material;
+        mat.SetFloat("_ScanTime", Time.time);
         lastFlash = Time.time + FadeDelay;
+        Update();
     }
 
-    // Start is called before the first frame update
     void Update()
     {
         var mat = GetComponent<MeshRenderer>().material;
         mat.SetVector("_Position", playerPos.position);
         mat.SetFloat("_Opacity", 1 / (1 + Mathf.Exp(FadeSpeed * (Time.time - lastFlash))));
-        if (Time.time - lastFlash >= ExpireTime) Destroy(gameObject);
+        if (!MasterCopy && Time.time - lastFlash >= ExpireTime) Destroy(gameObject);
     }
 }
 

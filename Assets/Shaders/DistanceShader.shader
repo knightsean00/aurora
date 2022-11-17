@@ -2,13 +2,14 @@ Shader "Shaders/DistanceShader"
 {
     Properties
     {
-        _NearColor ("NearColor", Color) = (1,1,1,1)
-        _FarColor ("FarColor", Color) = (1,1,1,1)
+        //_NearColor ("NearColor", Color) = (1,1,1,1)
+        //_FarColor ("FarColor", Color) = (1,1,1,1)
         _NearDist ("NearDist", Float) = 2
         _FarDist ("FarDist", Float) = 10
         _MaxIllum ("Max Illumination", Float) = 10
         _Position ("Position", Vector) = (0,0,0,0)
         _Opacity ("Global Opacity", Float) = 1
+        _ScanTime ("Global Opacity", Float) = 0
     }
     SubShader
     {
@@ -17,7 +18,8 @@ Shader "Shaders/DistanceShader"
         Cull Off
         ZWrite Off
         ZTest Always
-        Blend SrcAlpha OneMinusSrcAlpha
+        //BlendOp Sub
+        Blend One OneMinusSrcAlpha
 
         Pass
         {
@@ -30,12 +32,12 @@ Shader "Shaders/DistanceShader"
             struct appdata
             {
                 float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
+                float3 uv : TEXCOORD0;
             };
 
             struct v2f
             {
-                float3 uv : TEXCOORD0;
+                float4 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
             };
 
@@ -47,20 +49,36 @@ Shader "Shaders/DistanceShader"
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex /* - _Position */);
-                o.uv.z = (distance(v.vertex, _Position) - _NearDist) / (_FarDist - _NearDist);
-                o.uv.xy = v.uv.xy;
+                o.uv.w = (distance(v.vertex, _Position) - _NearDist) / (_FarDist - _NearDist);
+                o.uv.xyz = v.uv.xyz;
                 return o;
             }
 
-            fixed4 _NearColor;
-            fixed4 _FarColor;
             float _Opacity;
             float _MaxIllum;
+            float _ScanTime;
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = lerp(_NearColor, _FarColor, i.uv.z);
-                col.a = min(col.a * i.uv.y * i.uv.x * _Opacity, _MaxIllum);
+                fixed4x4 _NearColors;
+                _NearColors[0] = fixed4(0, 0.9696946, 1, 1);
+                _NearColors[1] = fixed4(1, 0, 0, 1);
+                _NearColors[2] = fixed4(1, 0, 1, 1);
+                _NearColors[3] = fixed4(1, 0, 1, 1);
+                fixed4x4 _FarColors;
+                _FarColors[0] = fixed4(0.46720982, 1, 0, 1);
+                _FarColors[1] = fixed4(1, .7, 0, 1);
+                _FarColors[2] = fixed4(1, 0, 1, 1);
+                _FarColors[3] = fixed4(1, 0, 1, 1);
+                int ix = int(i.uv.z);
+                fixed4 col = lerp(_NearColors[ix], _FarColors[ix], i.uv.w);
+                if (_ScanTime + i.uv.y > _Time.y) {
+                    col.a = 0;
+                } else {
+                    float alpha = min(col.a * i.uv.x * _Opacity, _MaxIllum);
+                    col.a = min(1, alpha);
+                }
+                col.rgb *= col.a;
                 return col;
             }
             ENDCG
