@@ -61,13 +61,13 @@ Shader "Shaders/DistanceShader"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4x4 _NearColors;
-                _NearColors[0] = fixed4(0, 0.9696946, 1, 1);
-                _NearColors[1] = fixed4(1, 0, 0, 1);
+                _NearColors[0] = fixed4(0.0549019608, 0.9529411765, 0.7725490196, 1);
+                _NearColors[1] = fixed4(0.9764705882, 0, 0.3137254902, 1);
                 _NearColors[2] = fixed4(1, 0, 1, 1);
                 _NearColors[3] = fixed4(1, 0, 1, 1);
                 fixed4x4 _FarColors;
-                _FarColors[0] = fixed4(0.46720982, 1, 0, 1);
-                _FarColors[1] = fixed4(1, .7, 0, 1);
+                _FarColors[0] = fixed4(0.3450980392, 0.4862745098, 0.8823529412, 1);
+                _FarColors[1] = fixed4(0.9764705882, 0.4156862745, 0, 1);
                 _FarColors[2] = fixed4(1, 0, 1, 1);
                 _FarColors[3] = fixed4(1, 0, 1, 1);
                 int ix = int(i.uv.z);

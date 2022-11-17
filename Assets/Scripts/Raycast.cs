@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer))]
 public class Raycast : MonoBehaviour
 {
-    public float MaxDistance = 100;
+    public float MaxDistance = 15;
     public int Span = 360;
     public float ConnectThreshold = 50;
     public float PropSpeed = 60;

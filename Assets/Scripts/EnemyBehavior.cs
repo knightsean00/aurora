@@ -23,9 +23,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private EnemySave save;
     
-
-    void Start()
-    {
+    void Awake() {
         enemy = GetComponent<Rigidbody2D>();
         if (enemyBehavior == Behavior.Drop || 
                 enemyBehavior == Behavior.DropXAndStop ||
@@ -102,13 +100,12 @@ public class EnemyBehavior : MonoBehaviour
 
     public void CreateSave() {
         Debug.Log("Creating Save");
-        Debug.Log(this.transform.position);
         save = new EnemySave(
             isChasing,
             isEnabled,
             this.transform.position,
             target,
-            enemy.gravityScale,
+            GetComponent<Rigidbody2D>().gravityScale,
             speed,
             enemyBehavior
         );

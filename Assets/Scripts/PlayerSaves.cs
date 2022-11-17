@@ -15,6 +15,7 @@ public class PlayerSaves : MonoBehaviour
         );
 
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            Debug.Log(enemy.name);
             if (enemy != null) {
                 enemy.GetComponent<EnemyBehavior>().CreateSave();
             }
