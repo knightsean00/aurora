@@ -111,7 +111,7 @@ TextureImporter:
         x: 0
         y: 0
         width: 50
-        height: 50
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,7 +132,7 @@ TextureImporter:
         x: 50
         y: 0
         width: 50
-        height: 50
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,27 +142,6 @@ TextureImporter:
       bones: []
       spriteID: 5eef7368c5e9c4b84a3314d740c72277
       internalID: -1681938211
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite-0002-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 0
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f6b2d48975f1345c38cffaa641f2b600
-      internalID: -1343942225
       vertices: []
       indices: 
       edges: []
@@ -180,7 +159,6 @@ TextureImporter:
     nameFileIdTable:
       Sprite-0002-Sheet_0: -974662
       Sprite-0002-Sheet_1: -1681938211
-      Sprite-0002-Sheet_2: -1343942225
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
