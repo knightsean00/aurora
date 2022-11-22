@@ -9,8 +9,8 @@ public interface CastResult
     public record Info(int colliderID, Type type);
     public record Hit(Info info, Vector2 point) : CastResult;
     public record Collection(Info info, List<Vector2> points);
-    public bool IsNear(CastResult other, float thresh) {
-        return this is Hit th && other is Hit oh && th.info == oh.info && Vector2.Distance(th.point, oh.point) < thresh;
+    public bool IsNear(CastResult other, Vector2 pos, float thresh) {
+        return this is Hit th && other is Hit oh && th.info == oh.info && Mathf.Abs(Mathf.Log(Vector2.Distance(th.point, pos) / Vector2.Distance(oh.point, pos))) < thresh;
     }
     public Info GetInfo() {
         return this is Hit th ? th.info : null;
