@@ -59,6 +59,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             raycaster.RunRaycast();
         }
+
+        if (player.velocity.x > 0) {
+            // TODO: switch direction to facing right
+        } else if (player.velocity.x < 0) {
+            // TODO: switch direction to facing left
+        } else {
+            // TODO: switch to idle animation
+        }
     }
 
     void FixedUpdate() 
