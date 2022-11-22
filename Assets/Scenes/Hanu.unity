@@ -54522,7 +54522,6 @@ GameObject:
   - component: {fileID: 1811797758}
   - component: {fileID: 1811797760}
   - component: {fileID: 1811797759}
-  - component: {fileID: 1811797761}
   m_Layer: 2
   m_Name: Square
   m_TagString: Respawn
@@ -54623,21 +54622,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!111 &1811797761
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1811797757}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 6ae0de28d0c5c41a18881fe06d36b2e0, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &1875738951
 GameObject:
   m_ObjectHideFlags: 0
