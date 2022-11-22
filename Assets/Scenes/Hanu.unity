@@ -2401,7 +2401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &580446342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53508,6 +53508,10 @@ PrefabInstance:
       propertyPath: RenderPrefab
       value: 
       objectReference: {fileID: 1572962759}
+    - target: {fileID: 6762359028913109773, guid: 14fdcc91813407448a091fdeb924bbea, type: 3}
+      propertyPath: ConnectThreshold
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14fdcc91813407448a091fdeb924bbea, type: 3}
 --- !u!114 &1581225381 stripped
@@ -54518,6 +54522,7 @@ GameObject:
   - component: {fileID: 1811797758}
   - component: {fileID: 1811797760}
   - component: {fileID: 1811797759}
+  - component: {fileID: 1811797761}
   m_Layer: 2
   m_Name: Square
   m_TagString: Respawn
@@ -54608,7 +54613,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.390566, g: 1, b: 0.57925016, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -54618,6 +54623,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!111 &1811797761
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811797757}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 6ae0de28d0c5c41a18881fe06d36b2e0, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1875738951
 GameObject:
   m_ObjectHideFlags: 0
