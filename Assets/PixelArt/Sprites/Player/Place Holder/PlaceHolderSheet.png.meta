@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3f458ad31a8aab34894c58d7b6305600
+guid: 5a72ab08a2c68044f965cdf1c2832abd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -117,12 +117,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprite-0002-Sheet_0
+      name: PlaceHolderSheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -131,19 +131,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea001ce89fca8fc42adb59c09b36b238
-      internalID: 1082224500
+      spriteID: 44ddc402196962c4983ac52beb2cdcd6
+      internalID: -1411114442
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite-0002-Sheet_1
+      name: PlaceHolderSheet_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 587979d844b11d04b8f0de8fb0f1c65b
+      internalID: -412895287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceHolderSheet_2
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 32
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -152,19 +173,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 941ab80c157477540b9466e20b54f72f
-      internalID: -554232092
+      spriteID: 49642859039a86a4492c31f8ed0149f2
+      internalID: 1889169198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite-0002-Sheet_2
+      name: PlaceHolderSheet_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 566b34552c43e354d90fbf681b17ecb8
+      internalID: 1638402787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceHolderSheet_4
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 32
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -173,29 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a8ca061b4bd7784b96953c70ecf8a91
-      internalID: 1029118216
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite-0002-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 747ebfc5ed7c0df4aae937c363f9c028
-      internalID: -1046357863
+      spriteID: 4df9ba06b694d03499540ec888d6c1f5
+      internalID: 708108858
       vertices: []
       indices: 
       edges: []
@@ -211,10 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sprite-0002-Sheet_3: -1046357863
-      Sprite-0002-Sheet_0: 1082224500
-      Sprite-0002-Sheet_1: -554232092
-      Sprite-0002-Sheet_2: 1029118216
+      PlaceHolderSheet_4: 708108858
+      PlaceHolderSheet_3: 1638402787
+      PlaceHolderSheet_1: -412895287
+      PlaceHolderSheet_0: -1411114442
+      PlaceHolderSheet_2: 1889169198
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

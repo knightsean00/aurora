@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour
 
     private int groundMask = 1 << 3;
 
-
+    //Animator Controller
+    public Animator animator;
 
     void Start()
     {
@@ -60,13 +61,12 @@ public class PlayerController : MonoBehaviour
             raycaster.RunRaycast();
         }
 
-        if (player.velocity.x > 0) {
-            // TODO: switch direction to facing right
-        } else if (player.velocity.x < 0) {
-            // TODO: switch direction to facing left
-        } else {
-            // TODO: switch to idle animation
-        }
+        //Animator Controller
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
+        animator.SetBool("isJumping", isJumping);
+        animator.SetFloat("moveInput", moveInput);
+
+
     }
 
     void FixedUpdate() 
