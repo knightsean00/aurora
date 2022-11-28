@@ -9,7 +9,7 @@ public class Raycast : MonoBehaviour
 {
     public float MaxDistance = 15;
     public int Span = 360;
-    public float ConnectThreshold = 50;
+    public float ConnectThreshold = 20;
     public float PropSpeed = 60;
     public float BasePower = 500;
     public float CapTheta = 18;
@@ -75,8 +75,7 @@ public class Raycast : MonoBehaviour
             foreach (var cast in castResults) {
                 var info = cast.GetInfo();
                 if (cast is CastResult.Hit hit) {
-                    var threshMul = (hit.point - pos).magnitude;
-                    if (lineGroups.Count == 0 || !(lastVal is CastResult res) || !res.IsNear(cast, thresh * threshMul)) {
+                    if (lineGroups.Count == 0 || !(lastVal is CastResult res) || !res.IsNear(cast, pos, thresh)) {
                         lineGroups.Add(new CastResult.Collection(hit.info, new List<Vector2>()));
                     }
                     lineGroups.Last().points.Add(hit.point);
@@ -84,8 +83,7 @@ public class Raycast : MonoBehaviour
                 lastVal = cast;
             }
             if (doWrap) {
-                var threshMul = (lineGroups.Last().points.Last() - pos).magnitude;
-                if (lineGroups.Count > 1 && castResults[0].IsNear(castResults.Last(), thresh * threshMul)) {
+                if (lineGroups.Count > 1 && castResults[0].IsNear(castResults.Last(), pos, thresh)) {
                     var last = lineGroups.Last().points;
                     lineGroups.RemoveAt(lineGroups.Count - 1);
                     lineGroups[0] = new CastResult.Collection(lineGroups[0].info, new List<Vector2>(last.Concat(lineGroups[0].points)));
