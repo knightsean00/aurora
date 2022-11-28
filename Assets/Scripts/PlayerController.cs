@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
     public Raycast raycaster;
 
     private Rigidbody2D player;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
         moveInput = Input.GetAxisRaw("Horizontal");
         if (Input.GetButtonDown("Jump")) {
             isJumping = true;
+            animator.SetBool("isJumping", true);
         }
         if (Input.GetButtonUp("Jump")) {
             isJumping = false;
@@ -62,10 +64,17 @@ public class PlayerController : MonoBehaviour
         }
 
         //Animator Controller
+        animator.SetFloat("xDirection", moveInput);
         animator.SetFloat("Speed", Mathf.Abs(moveInput));
         animator.SetBool("isJumping", isJumping);
-        animator.SetFloat("moveInput", moveInput);
+        animator.SetBool("isGrounded", isGrounded());
 
+        // if (moveInput < 0) {
+        // animator.SetBool("Mirror", true);
+        // }
+        // else {
+        // animator.SetBool("Mirror", false);
+        // }
 
     }
 
