@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         //animator.SetFloat("xDirection", moveInput);
         animator.SetFloat("Speed", Mathf.Abs(moveInput));
         animator.SetBool("isJumping", isJumping);
-        animator.SetBool("isGrounded", isGrounded());
+        animator.SetFloat("xDirection", moveInput);
         animator.SetBool("isGrounded", isGrounded());
 
     }
