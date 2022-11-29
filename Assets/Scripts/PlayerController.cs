@@ -64,17 +64,11 @@ public class PlayerController : MonoBehaviour
         }
 
         //Animator Controller
-        animator.SetFloat("xDirection", moveInput);
+        //animator.SetFloat("xDirection", moveInput);
         animator.SetFloat("Speed", Mathf.Abs(moveInput));
         animator.SetBool("isJumping", isJumping);
+        animator.SetFloat("xDirection", moveInput);
         animator.SetBool("isGrounded", isGrounded());
-
-        // if (moveInput < 0) {
-        // animator.SetBool("Mirror", true);
-        // }
-        // else {
-        // animator.SetBool("Mirror", false);
-        // }
 
     }
 

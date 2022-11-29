@@ -16,43 +16,43 @@ public class EnemyBehavior : MonoBehaviour
     private bool isEnabled = true;
     private Vector2 target;
     private Rigidbody2D enemy;
-    private float gravityScale = 2.5f;
+    private float gravityScale = 5f;
 
     public float speed;
     public Behavior enemyBehavior;
 
     private EnemySave save;
+    private EnemySave initialSave;
     
     void Awake() {
         enemy = GetComponent<Rigidbody2D>();
+        enemy.gravityScale = gravityScale;
         if (enemyBehavior == Behavior.Drop || 
                 enemyBehavior == Behavior.DropXAndStop ||
                 enemyBehavior == Behavior.DropXAndContinue) {
             enemy.gravityScale = 0f;
         }
+        CreateInitialSave();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (isChasing) {
-            if (enemyBehavior == Behavior.MoveXAndStop) {
-                // enemy.velocity = Vector2.zero;
-                Vector3 tempPosition = this.transform.position;
-                tempPosition.x = Mathf.MoveTowards(
-                    tempPosition.x,
-                    target.x,
-                    speed * Time.deltaTime);
-                this.transform.position = tempPosition;
-
-                Vector2 currentPosition = tempPosition;
-                if (currentPosition == target){
-                    isChasing = false;
-                }
-            } else if (enemyBehavior == Behavior.MoveXAndContinue) {
+            if (enemyBehavior == Behavior.MoveXAndStop || enemyBehavior == Behavior.MoveXAndContinue) {
                 Vector2 tempVelocity = enemy.velocity;
                 tempVelocity.x = speed;
                 enemy.velocity = tempVelocity;
+
+                if (enemyBehavior == Behavior.MoveXAndStop) {
+                    if (speed > 0 && this.transform.position.x >= target.x) {
+                        this.isChasing = false;
+                        enemy.velocity = Vector2.zero;
+                    } else if (speed < 0 && this.transform.position.x <= target.x) {
+                        this.isChasing = false;
+                        enemy.velocity = Vector2.zero;
+                    }
+                }
             }
         }
     }
@@ -83,13 +83,6 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     public void LoadSave() {
-        enemy.velocity = Vector2.zero;
-        this.speed = save.speed;
-        this.isChasing = save.isChasing;
-        this.transform.position = save.position;
-        this.target = save.target;
-        enemy.gravityScale = save.gravityScale;
-        this.enemyBehavior = save.enemyBehavior;
         this.isEnabled = save.isEnabled;
         if (save.isEnabled) {
             this.GetComponent<SpriteRenderer>().enabled = true;
@@ -98,6 +91,29 @@ public class EnemyBehavior : MonoBehaviour
             this.GetComponent<SpriteRenderer>().enabled = false;
             this.GetComponent<Collider2D>().enabled = false;
         }
+        enemy.velocity = Vector2.zero;
+
+        // Can be changed to save if values should
+        // change after passing checkpoint
+        enemy.gravityScale = initialSave.gravityScale;
+        this.speed = initialSave.speed;
+        this.isChasing = initialSave.isChasing;
+        this.transform.position = initialSave.position;
+        this.target = initialSave.target;
+        this.enemyBehavior = initialSave.enemyBehavior;
+    }
+
+    public void CreateInitialSave() {
+        initialSave = new EnemySave(
+            isChasing,
+            isEnabled,
+            this.transform.position,
+            target,
+            GetComponent<Rigidbody2D>().gravityScale,
+            speed,
+            enemyBehavior
+        );
+        CreateSave();
     }
 
     public void CreateSave() {
@@ -113,6 +129,7 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     public void StartChasing(Vector2 position) {
+        Debug.Log("Chasing");
         target = position;
         isChasing = true;
 
@@ -128,7 +145,7 @@ public class EnemyBehavior : MonoBehaviour
             enemyBehavior = Behavior.MoveXAndStop;
         }
 
-        if (enemyBehavior == Behavior.MoveXAndContinue) {
+        if (enemyBehavior == Behavior.MoveXAndContinue || enemyBehavior == Behavior.MoveXAndStop) {
             if (this.transform.position.x < target.x) {
                 speed = Mathf.Abs(speed);
             } else if (this.transform.position.x > target.x) {
