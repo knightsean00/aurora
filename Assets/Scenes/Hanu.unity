@@ -1279,12 +1279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultPos: {x: 0, y: 0}
-  lastPos: {x: 0, y: 0}
-  lastTheta: 0
-  ix: 0
-  inventory: {fileID: 0}
-  grabTime: -1e+20
-  state: 4
 --- !u!1 &433565496
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,12 +2315,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultPos: {x: 0, y: 0}
-  lastPos: {x: 0, y: 0}
-  lastTheta: 0
-  ix: 0
-  inventory: {fileID: 0}
-  grabTime: -1e+20
-  state: 4
 --- !u!1 &569561430
 GameObject:
   m_ObjectHideFlags: 0
@@ -3095,12 +3083,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultPos: {x: 0, y: 0}
-  lastPos: {x: 0, y: 0}
-  lastTheta: 0
-  ix: 0
-  inventory: {fileID: 0}
-  grabTime: -1e+20
-  state: 4
 --- !u!1 &675099703
 GameObject:
   m_ObjectHideFlags: 0
@@ -4100,6 +4082,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &956985218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3539235584957433080, guid: 4ff3db1590f415d40869f7d625eaec5b, type: 3}
+  m_PrefabInstance: {fileID: 1706461046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &967787952
 GameObject:
   m_ObjectHideFlags: 0
@@ -52709,12 +52696,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultPos: {x: 0, y: 0}
-  lastPos: {x: 0, y: 0}
-  lastTheta: 0
-  ix: 0
-  inventory: {fileID: 0}
-  grabTime: -1e+20
-  state: 4
 --- !u!1 &1183400169
 GameObject:
   m_ObjectHideFlags: 0
@@ -53776,6 +53757,7 @@ MonoBehaviour:
   - {fileID: 555585975}
   - {fileID: 1176779174}
   - {fileID: 665730203}
+  Timing: 1
 --- !u!61 &1590865627
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -54158,12 +54140,123 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3539235584957433085, guid: 4ff3db1590f415d40869f7d625eaec5b, type: 3}
   m_PrefabInstance: {fileID: 1706461046}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 956985218}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9c4e47b1b0f9f34c9fd8719b7ecb993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1706461052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956985218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af0f61b92f92a746b9ac7e0c9dbc10c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!120 &1706461053
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956985218}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.08771896
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_UseWorldSpace: 1
+  m_Loop: 1
 --- !u!1 &1720730800
 GameObject:
   m_ObjectHideFlags: 0
@@ -54403,12 +54496,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultPos: {x: 0, y: 0}
-  lastPos: {x: 0, y: 0}
-  lastTheta: 0
-  ix: 0
-  inventory: {fileID: 0}
-  grabTime: -1e+20
-  state: 4
 --- !u!1 &1780094555
 GameObject:
   m_ObjectHideFlags: 0

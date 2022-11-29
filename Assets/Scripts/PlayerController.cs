@@ -59,8 +59,21 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
             jumpToggle = true;
         }
+
         if (Input.GetMouseButtonDown(0)) {
+            this.GetComponent<RaycastUI>().RenderCircleCrosshair(raycaster.MaxDistance);
+        }
+        if (Input.GetMouseButtonUp(0)) {
             raycaster.RunRaycast();
+            this.GetComponent<RaycastUI>().StopRender();
+        }
+
+        if (Input.GetMouseButtonDown(1)) {
+
+        }
+        if (Input.GetMouseButtonUp(1)) {
+            // raycaster.RunRaycast();
+            this.GetComponent<RaycastUI>().StopRender();
         }
 
         //Animator Controller
