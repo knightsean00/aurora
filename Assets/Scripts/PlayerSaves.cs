@@ -13,10 +13,6 @@ public class PlayerSaves : MonoBehaviour
             this.transform.position, 
             this.GetComponent<PlayerInventory>().GetInventory()
         );
-
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
-            enemy.SendMessage("CreateSave");
-        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
