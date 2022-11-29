@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    public int Size { get { return inventory.items.Count; } }
+    public float Width = 2f;
+    public float TurnSpeed = 0.3f;
     private Inventory inventory = new Inventory();
 
     public Inventory GetInventory() {
@@ -15,9 +18,9 @@ public class PlayerInventory : MonoBehaviour
     }
     
     public void ResetInventory(Inventory newInventory) {
-        foreach(string itemName in inventory.GetItems()) {
-            if (!newInventory.HasItem(itemName)) {
-                ShowObject(GameObject.Find(itemName));
+        foreach(var item in inventory.GetItems()) {
+            if (!newInventory.HasItem(item)) {
+                item.Release();
             }
         }
         inventory = newInventory.Copy();
@@ -35,9 +38,14 @@ public class PlayerInventory : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.gameObject.tag == "Collectible") {
-            inventory.AddItem(collider.gameObject.name);
-            HideObject(collider.gameObject);
+        var obj = collider.gameObject;
+        var collectible = obj.GetComponent<Collectible>();
+        if (collectible != null) {
+            foreach (var item in inventory.items) {
+                item.Perturb(Collectible.GrabState.Shifting);
+            }
+            inventory.AddItem(collectible);
+            collectible.Grab(Size - 1, this);
             Debug.Log(inventory);
         }
     }
@@ -57,48 +65,48 @@ public class PlayerInventory : MonoBehaviour
 
 public class Inventory
 {
-    private HashSet<string> items = new HashSet<string>();
+    public HashSet<Collectible> items = new HashSet<Collectible>();
 
     public Inventory() { }
     
-    public Inventory(HashSet<string> items) {
-        this.items = new HashSet<string>(items);
+    public Inventory(HashSet<Collectible> items) {
+        this.items = new HashSet<Collectible>(items);
     }
 
-    public void AddItem(string itemName) {
-        items.Add(itemName);
+    public void AddItem(Collectible item) {
+        items.Add(item);
     }
 
-    public void AddItems(IEnumerable<string> itemNames) {
-        foreach (string itemName in itemNames) {
-            this.AddItem(itemName);
+    public void AddItems(IEnumerable<Collectible> items) {
+        foreach (Collectible item in items) {
+            this.AddItem(item);
         }
     }
 
-    public void RemoveItem(string itemName) {
-        items.Remove(itemName);
+    public void RemoveItem(Collectible item) {
+        items.Remove(item);
     }
 
-    public void RemoveItems(IEnumerable<string> itemNames) {
-        foreach (string itemName in itemNames) {
-            this.RemoveItem(itemName);
+    public void RemoveItems(IEnumerable<Collectible> items) {
+        foreach (Collectible item in items) {
+            this.RemoveItem(item);
         }
     }
 
-    public bool HasItem(string itemName) {
-        return items.Contains(itemName);
+    public bool HasItem(Collectible item) {
+        return items.Contains(item);
     }
 
-    public bool HasItems(IEnumerable<string> itemNames) {
+    public bool HasItems(IEnumerable<Collectible> items) {
         bool contains = true;
-        foreach (string itemName in itemNames) {
-            contains = contains && this.HasItem(itemName);
+        foreach (Collectible item in items) {
+            contains = contains && this.HasItem(item);
         }
         return contains;
     }
 
-    public HashSet<string> GetItems() {
-        return new HashSet<string>(items);
+    public HashSet<Collectible> GetItems() {
+        return new HashSet<Collectible>(items);
     }
 
     public Inventory Copy() {
@@ -107,8 +115,8 @@ public class Inventory
 
     public override string ToString() {
         string output = "{";
-        foreach(string itemName in items) {
-            output += itemName + ", ";
+        foreach(Collectible item in items) {
+            output += item + ", ";
         }
         return output + "}";
     }

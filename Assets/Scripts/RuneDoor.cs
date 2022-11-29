@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class RuneDoor : MonoBehaviour
 {
-    public List<string> RequiredRunes = new List<string>();
+    public List<Collectible> RequiredRunes = new List<Collectible>();
 }
