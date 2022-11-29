@@ -66,10 +66,10 @@ public class PlayerSaves : MonoBehaviour
 
 public class Save {
     public Vector3 position;
-    public Inventory inventory;
+    public List<Collectible> inventory;
 
-    public Save(Vector3 position, Inventory inventory) {
+    public Save(Vector3 position, List<Collectible> inventory) {
         this.position = position;
-        this.inventory = inventory.Copy();
+        this.inventory = new List<Collectible>(inventory);
     }
 }
