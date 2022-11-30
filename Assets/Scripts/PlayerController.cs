@@ -83,6 +83,15 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("xDirection", moveInput);
         animator.SetBool("isGrounded", isGrounded());
 
+        if (moveInput > 0){
+            gameObject.transform.localScale = new Vector3(1,1,1);
+        }
+        else {
+            if (moveInput < 0){
+                gameObject.transform.localScale = new Vector3(-1,1,1);
+            }
+        }
+
     }
 
     void FixedUpdate() 
