@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     private int groundMask = 1 << 3;
 
+    private float directionalEcholocationSpan = 15f;
+
     //Animator Controller
     public Animator animator;
 
@@ -68,8 +70,11 @@ public class PlayerController : MonoBehaviour
             this.GetComponent<RaycastUI>().StopRender();
         }
 
-        if (Input.GetMouseButtonDown(1)) {
-
+        if (Input.GetMouseButton(1)) {
+            Vector3 mousePosition = this.transform.position + Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            float center = Mathf.Atan2(mousePosition.y, mousePosition.x);
+            Debug.Log(center);
+            this.GetComponent<RaycastUI>().RenderDirectionalCrosshair(center, Mathf.Deg2Rad * directionalEcholocationSpan);
         }
         if (Input.GetMouseButtonUp(1)) {
             // raycaster.RunRaycast();
