@@ -71,13 +71,20 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetMouseButton(1)) {
-            Vector3 mousePosition = this.transform.position + Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            Vector3 mousePosition = this.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)));
             float center = Mathf.Atan2(mousePosition.y, mousePosition.x);
-            Debug.Log(center);
-            this.GetComponent<RaycastUI>().RenderDirectionalCrosshair(center, Mathf.Deg2Rad * directionalEcholocationSpan);
+            if (this.transform.localScale.x < 0) {
+                center = Mathf.Atan2(mousePosition.y, -mousePosition.x);
+            }
+            this.GetComponent<RaycastUI>().RenderDirectionalCrosshair(raycaster.MaxDistance, center, Mathf.Deg2Rad * directionalEcholocationSpan);
         }
         if (Input.GetMouseButtonUp(1)) {
-            // raycaster.RunRaycast();
+            Vector3 mousePosition = this.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)));
+            float center = Mathf.Atan2(mousePosition.y, mousePosition.x);
+            if (this.transform.localScale.x < 0) {
+                center = Mathf.Atan2(mousePosition.y, -mousePosition.x);
+            }
+            raycaster.RunRaycast(center, Mathf.Deg2Rad * directionalEcholocationSpan);
             this.GetComponent<RaycastUI>().StopRender();
         }
 

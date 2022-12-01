@@ -14,7 +14,7 @@ public class RaycastUI : MonoBehaviour
     private float distance = 0;
     private float center = 0f;
     private float span = 0f;
-    private float transitionSpeed = .15f;
+    private float transitionSpeed = .1f;
     private float timer = 0f;
     private float startAlpha = 0f;
     private float endAlpha = .25f;
@@ -51,10 +51,9 @@ public class RaycastUI : MonoBehaviour
             crosshair.positionCount = 3;
             positions = new Vector3[crosshair.positionCount];
 
-            float lineLength = 12.5f;
-            positions[0] = this.transform.position + new Vector3(Mathf.Cos(center + span), Mathf.Sin(center + span), 0) * lineLength;
+            positions[0] = this.transform.position + new Vector3(Mathf.Cos(center + span), Mathf.Sin(center + span), 0) * distance;
             positions[1] = this.transform.position;
-            positions[2] = this.transform.position + new Vector3(Mathf.Cos(center - span), Mathf.Sin(center - span), 0) * lineLength;
+            positions[2] = this.transform.position + new Vector3(Mathf.Cos(center - span), Mathf.Sin(center - span), 0) * distance;
         }
 
         if (mode != RenderMode.None) {
@@ -77,8 +76,9 @@ public class RaycastUI : MonoBehaviour
         this.distance = distance;
     }
 
-    public void RenderDirectionalCrosshair(float center, float span) {
+    public void RenderDirectionalCrosshair(float distance, float center, float span) {
         mode = RenderMode.DirectionalCrosshair;
+        this.distance = distance;
         this.center = center;
         this.span = span;
     }

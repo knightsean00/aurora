@@ -54004,7 +54004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1990722939021477033, guid: 0c91427324e1bca419b6228fc6dbdcfc, type: 3}
       propertyPath: orthographic size
-      value: 9.477273
+      value: 11.681818
       objectReference: {fileID: 0}
     - target: {fileID: 1990722939021477034, guid: 0c91427324e1bca419b6228fc6dbdcfc, type: 3}
       propertyPath: m_Name
@@ -54024,8 +54024,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: 99591d2e8cfa8fa49a60b52d2209053b, type: 2}
     - target: {fileID: 2236260920070274960, guid: 4ff3db1590f415d40869f7d625eaec5b, type: 3}
+      propertyPath: m_Intensity
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2236260920070274960, guid: 4ff3db1590f415d40869f7d625eaec5b, type: 3}
       propertyPath: m_PointLightOuterRadius
-      value: 4
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 3539235584957433080, guid: 4ff3db1590f415d40869f7d625eaec5b, type: 3}
       propertyPath: m_Name
