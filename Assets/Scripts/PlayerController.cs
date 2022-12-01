@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private float groundDeceleration;
     private float airAcceleration;
     private float airDeceleration;
-    private float gravityAcceleration = 62.5f;
+    private float gravityAcceleration = 90f;
     private bool canMove = true;
 
     private float moveInput = 0f;

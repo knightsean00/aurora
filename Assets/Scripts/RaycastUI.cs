@@ -17,7 +17,7 @@ public class RaycastUI : MonoBehaviour
     private float transitionSpeed = .1f;
     private float timer = 0f;
     private float startAlpha = 0f;
-    private float endAlpha = .25f;
+    private float endAlpha = .1f;
 
     private LineRenderer crosshair;
 

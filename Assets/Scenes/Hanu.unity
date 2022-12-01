@@ -54000,11 +54000,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1990722939021476951, guid: 0c91427324e1bca419b6228fc6dbdcfc, type: 3}
       propertyPath: m_AssetsPPU
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1990722939021477033, guid: 0c91427324e1bca419b6228fc6dbdcfc, type: 3}
       propertyPath: orthographic size
-      value: 11.681818
+      value: 14.277778
       objectReference: {fileID: 0}
     - target: {fileID: 1990722939021477034, guid: 0c91427324e1bca419b6228fc6dbdcfc, type: 3}
       propertyPath: m_Name
