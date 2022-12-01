@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5ed21b7be8c749a41a7b4ad263f2d147
+guid: 86604ad8b1b9e0644b3fd969f493750a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -101,11 +101,23 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rightidlesprite_0
+      name: leftjumpsprite_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8cc83bd07e304794b955e3f60843a556
-      internalID: -1304474056
+      spriteID: 61928c7799e3b2642b09983f7a425a47
+      internalID: 1719690226
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rightidlesprite_1
+      name: leftjumpsprite_1
       rect:
         serializedVersion: 2
         x: 32
@@ -140,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4815b18366f18244b86b3581cf43b306
-      internalID: 177541329
+      spriteID: c4d19272345b580469e79eb311901656
+      internalID: 1180401616
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rightidlesprite_2
+      name: leftjumpsprite_2
       rect:
         serializedVersion: 2
         x: 64
@@ -161,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56b8021215fec3b4b957aed8735a2e6b
-      internalID: 928229144
+      spriteID: d9b70e6d12a15dd4083797f6af696f62
+      internalID: 607621474
       vertices: []
       indices: 
       edges: []
@@ -178,9 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      rightidlesprite_0: -1304474056
-      rightidlesprite_1: 177541329
-      rightidlesprite_2: 928229144
+      leftjumpsprite_2: 607621474
+      leftjumpsprite_1: 1180401616
+      leftjumpsprite_0: 1719690226
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

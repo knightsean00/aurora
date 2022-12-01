@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a507162a61a776c4c9d3f468e5a17e18
+guid: 3bcd012f6b3cf8044b27cf12184f1135
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -101,11 +101,23 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rightjumpsprite_0
+      name: leftidlesprite_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d44a972a44f30054583eb7818c6494d9
-      internalID: -1641254636
+      spriteID: 04df735d36a3e0e4e8af42eb1f9de2d8
+      internalID: 2063254596
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rightjumpsprite_1
+      name: leftidlesprite_1
       rect:
         serializedVersion: 2
         x: 32
@@ -140,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0364affe3abcd94b96c71c76795b9be
-      internalID: 1493916760
+      spriteID: 442341b744302e2439bf9af32f721b3a
+      internalID: -1414378763
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rightjumpsprite_2
+      name: leftidlesprite_2
       rect:
         serializedVersion: 2
         x: 64
@@ -161,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2764274710d5dd245aa8ed05c344a532
-      internalID: -353061026
+      spriteID: 349d862fe97702c428d9e6a51a078a5c
+      internalID: -1796937766
       vertices: []
       indices: 
       edges: []
@@ -178,9 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      rightjumpsprite_2: -353061026
-      rightjumpsprite_0: -1641254636
-      rightjumpsprite_1: 1493916760
+      leftidlesprite_0: 2063254596
+      leftidlesprite_1: -1414378763
+      leftidlesprite_2: -1796937766
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
