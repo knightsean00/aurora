@@ -54,6 +54,7 @@ public class EnemyBehavior : MonoBehaviour
                     }
                 }
             }
+            gameObject.transform.Rotate(0, 0, 45f, Space.Self);
         }
     }
 
