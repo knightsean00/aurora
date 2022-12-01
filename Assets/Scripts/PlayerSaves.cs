@@ -13,10 +13,6 @@ public class PlayerSaves : MonoBehaviour
             this.transform.position, 
             this.GetComponent<PlayerInventory>().GetInventory()
         );
-
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
-            enemy.SendMessage("CreateSave");
-        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -66,10 +62,10 @@ public class PlayerSaves : MonoBehaviour
 
 public class Save {
     public Vector3 position;
-    public Inventory inventory;
+    public List<Collectible> inventory;
 
-    public Save(Vector3 position, Inventory inventory) {
+    public Save(Vector3 position, List<Collectible> inventory) {
         this.position = position;
-        this.inventory = inventory.Copy();
+        this.inventory = new List<Collectible>(inventory);
     }
 }

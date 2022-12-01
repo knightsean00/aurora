@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private float groundDeceleration;
     private float airAcceleration;
     private float airDeceleration;
-    private float gravityAcceleration = 62.5f;
+    private float gravityAcceleration = 90f;
     private bool canMove = true;
 
     private float moveInput = 0f;
@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private float gravityDelayTimer = 0f;
 
     private int groundMask = 1 << 3;
+
+    private float directionalEcholocationSpan = 15f;
 
     //Animator Controller
     public Animator animator;
@@ -59,22 +61,48 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
             jumpToggle = true;
         }
+
         if (Input.GetMouseButtonDown(0)) {
+            this.GetComponent<RaycastUI>().RenderCircleCrosshair(raycaster.MaxDistance);
+        }
+        if (Input.GetMouseButtonUp(0)) {
             raycaster.RunRaycast();
+            this.GetComponent<RaycastUI>().StopRender();
+        }
+
+        if (Input.GetMouseButton(1)) {
+            Vector3 mousePosition = this.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)));
+            float center = Mathf.Atan2(mousePosition.y, mousePosition.x);
+            if (this.transform.localScale.x < 0) {
+                center = Mathf.Atan2(mousePosition.y, -mousePosition.x);
+            }
+            this.GetComponent<RaycastUI>().RenderDirectionalCrosshair(raycaster.MaxDistance, center, Mathf.Deg2Rad * directionalEcholocationSpan);
+        }
+        if (Input.GetMouseButtonUp(1)) {
+            Vector3 mousePosition = this.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)));
+            float center = Mathf.Atan2(mousePosition.y, mousePosition.x);
+            if (this.transform.localScale.x < 0) {
+                center = Mathf.Atan2(mousePosition.y, -mousePosition.x);
+            }
+            raycaster.RunRaycast(center, Mathf.Deg2Rad * directionalEcholocationSpan);
+            this.GetComponent<RaycastUI>().StopRender();
         }
 
         //Animator Controller
         //animator.SetFloat("xDirection", moveInput);
         animator.SetFloat("Speed", Mathf.Abs(moveInput));
         animator.SetBool("isJumping", isJumping);
-        //animator.SetBool("isGrounded", isGrounded());
+        animator.SetFloat("xDirection", moveInput);
+        animator.SetBool("isGrounded", isGrounded());
 
-        // if (moveInput < 0) {
-        // animator.SetBool("Mirror", true);
-        // }
-        // else {
-        // animator.SetBool("Mirror", false);
-        // }
+        if (moveInput > 0){
+            gameObject.transform.localScale = new Vector3(1,1,1);
+        }
+        else {
+            if (moveInput < 0){
+                gameObject.transform.localScale = new Vector3(-1,1,1);
+            }
+        }
 
     }
 

@@ -5,4 +5,5 @@ using UnityEngine;
 public class RuneDoor : MonoBehaviour
 {
     public List<Collectible> RequiredRunes = new List<Collectible>();
+    public float Timing = 1f;
 }
