@@ -33712,6 +33712,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  Timing: 1
 --- !u!61 &1590865627
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33954,7 +33955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1990722939021477033, guid: 0c91427324e1bca419b6228fc6dbdcfc, type: 3}
       propertyPath: orthographic size
-      value: 8.826923
+      value: 7.6923075
       objectReference: {fileID: 0}
     - target: {fileID: 1990722939021477034, guid: 0c91427324e1bca419b6228fc6dbdcfc, type: 3}
       propertyPath: m_Name
