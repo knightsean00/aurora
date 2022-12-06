@@ -33,4 +33,11 @@ public class RuneDoor : MonoBehaviour
         this.targetColor = color;
         timer = 0;
     }
+    public void Open() {
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        foreach (var collectible in RequiredRunes) {
+            collectible.GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
 }

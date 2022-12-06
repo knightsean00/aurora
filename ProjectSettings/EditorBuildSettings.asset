@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hanu.unity
     guid: 42fc1db47eb5fb345bf6698d34fac6f3
+  - enabled: 1
+    path: Assets/Scenes/Start.unity
+    guid: eea91d45203025eaba63aa5ca78b68aa
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 1aaf18d0e28be52849f1987661d22661
   m_configObjects: {}

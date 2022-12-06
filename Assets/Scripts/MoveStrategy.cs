@@ -64,8 +64,7 @@ public interface MoveStrategy
     public record ReleaseOpen(float time, Vector3 startPos, Vector3 endPos, RuneDoor door) : Release(time, startPos, endPos) {
         public override void End(Collectible collectible) {
             base.End(collectible);
-            door.GetComponent<Collider2D>().enabled = false;
-            door.GetComponent<SpriteRenderer>().enabled = false;
+            door.Open();
         }
     }
 }
