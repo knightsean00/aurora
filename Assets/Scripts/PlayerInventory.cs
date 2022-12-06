@@ -39,8 +39,15 @@ public class PlayerInventory : MonoBehaviour
                         : () => new MoveStrategy.Release(targetTime, rune.transform.localPosition, pos));
                 }
             } else {
+                door.ChangeColor(new Color(0.6320754f, 0.1156817f, 0.1710251f));
                 Debug.Log(inventory);
             }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision) {
+        if (collision.gameObject.tag == "RuneDoor") {
+            collision.gameObject.GetComponent<RuneDoor>().DefaultColor();
         }
     }
 
