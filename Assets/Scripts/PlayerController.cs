@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private int groundMask = 1 << 3;
 
-    private float directionalEcholocationSpan = 15f;
+    private float directionalEcholocationSpan = 30f;
 
     //Animator Controller
     public Animator animator;
