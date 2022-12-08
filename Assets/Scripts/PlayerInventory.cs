@@ -8,6 +8,9 @@ public class PlayerInventory : MonoBehaviour
     public int Size { get { return inventory.Count; } }
     public List<Collectible> inventory = new List<Collectible>();
 
+    //Audio
+    public AudioSource collect;
+
     public List<Collectible> GetInventory() {
         return new List<Collectible>(inventory);
     }
@@ -56,6 +59,7 @@ public class PlayerInventory : MonoBehaviour
         var collectible = obj.GetComponent<Collectible>();
         if (collectible != null) {
             collectible.Grab(this);
+            collect.Play();
             inventory.Add(collectible);
             Debug.Log(inventory);
         }

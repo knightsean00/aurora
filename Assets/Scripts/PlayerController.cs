@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
     private float gravityAcceleration = 90f;
     private bool canMove = true;
 
+    //sounds
+    public AudioSource steps;
+    public AudioSource echo;
+
     private float moveInput = 0f;
 
     private bool isJumping = false;
@@ -67,6 +71,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0)) {
             raycaster.RunRaycast();
+            echo.Play();
             this.GetComponent<RaycastUI>().StopRender();
         }
 
@@ -85,6 +90,7 @@ public class PlayerController : MonoBehaviour
                 center = Mathf.Atan2(mousePosition.y, -mousePosition.x);
             }
             raycaster.RunRaycast(center, Mathf.Deg2Rad * directionalEcholocationSpan);
+            echo.Play();
             this.GetComponent<RaycastUI>().StopRender();
         }
 
@@ -95,14 +101,28 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("xDirection", moveInput);
         animator.SetBool("isGrounded", isGrounded());
 
+        if(!isGrounded()){
+            steps.enabled = false;
+        }
+
         if (moveInput > 0){
             gameObject.transform.localScale = new Vector3(1,1,1);
+            if(isGrounded()){
+                steps.enabled = true;
+            }
         }
         else {
             if (moveInput < 0){
                 gameObject.transform.localScale = new Vector3(-1,1,1);
+                if(isGrounded()){
+                steps.enabled = true;
+                }
+            }
+            else{
+                steps.enabled = false;
             }
         }
+        
 
     }
 

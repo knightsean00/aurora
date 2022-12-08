@@ -12,6 +12,9 @@ public class RuneDoor : MonoBehaviour
     private Color oldColor = new Color(0.5288537f, 0.5324851f, 0.6886792f, 1f);
     private static Color defaultColor = new Color(0.5288537f, 0.5324851f, 0.6886792f, 1f);
 
+    //Audio
+    public AudioSource collect;
+
     void Awake() {
         this.GetComponent<SpriteRenderer>().color = defaultColor;
     }
@@ -37,6 +40,7 @@ public class RuneDoor : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
         foreach (var collectible in RequiredRunes) {
+            collect.Play();
             collectible.GetComponent<SpriteRenderer>().enabled = false;
         }
     }

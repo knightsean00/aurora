@@ -7,6 +7,9 @@ public class PlayerSaves : MonoBehaviour
     private Save currentSave;
     private float resetTime = .75f;
 
+    //sounds
+    public AudioSource respawn;
+
     void Awake()
     {
         currentSave = new Save(
@@ -50,6 +53,7 @@ public class PlayerSaves : MonoBehaviour
             enemy.SendMessage("LoadSave");
         }
         
+        respawn.Play();
         GameObject.Find("Main Camera").GetComponent<CameraTracking>().MoveToPosition(currentSave.position, resetTime);
         Invoke("Respawn", resetTime + .1f);
     }
